@@ -1,23 +1,34 @@
 <template lang="jade">
-.nav_panel
-  img(src="../assets/img/00_COMMON/HOME.png", @click="scrollTo('.pageIndex')")
-  img(src="../assets/img/00_COMMON/INTRO.png", @click="scrollTo('.pageIntro')")
-  img(src="../assets/img/00_COMMON/WORKS.png", @click="scrollTo('.pageWorks')")
-  img(src="../assets/img/00_COMMON/TOUR.png", @click="scrollTo('.pageTours')")
-  img(src="../assets/img/00_COMMON/CONTACT.png", @click="scrollTo('.pageContact')")
+.navPanel(:class="{active: scrollTop>indexHeight}")
+  img.navItem(src="../assets/img/00_COMMON/HOME.png", @click="scrollTo('.pageIndex')")
+  img.navItem(src="../assets/img/00_COMMON/INTRO.png", @click="scrollTo('.pagetrIno')")
+  img.navItem(src="../assets/img/00_COMMON/WORKS.png", @click="scrollTo('.pageWorks')")
+  img.navItem(src="../assets/img/00_COMMON/TOUR.png", @click="scrollTo('.pageTour')")
+  img.navItem(src="../assets/img/00_COMMON/CONTACT.png", @click="scrollTo('.pageContact')")
+
+  img.navLogo(src="../assets/img/00_COMMON/LOGO.png",
+              :class="{active: scrollTop>indexHeight}")
 
 
 </template>
 
 <script>
 import {mapState , mapMutations} from 'vuex'
+import $ from 'jquery'
 export default {
   data () {
     return {
+      indexHeight: -1
     }
   },
   methods: {
     ...mapMutations(['scrollTo'])
+  },
+  mounted(){
+    this.indexHeight=$(".pageIndex").outerHeight()
+  },
+  computed:{
+    ...mapState(['scrollTop'])
   }
 }
 </script>
@@ -27,22 +38,36 @@ export default {
 
 @import "../assets/sass/_variables.sass"
 
-.nav_panel
+.navPanel
   position: fixed
   z-index: 10
   left: 7%
   bottom: 10%
   display: flex
   flex-direction: column
-  img
-    width: 100px
+  
+  .navItem
+    width: 75px
+    // height: 20px
     margin-bottom: 20px
     cursor: pointer
     user-select: none
+    opacity: 0
     +trans
     &:hover
       transform: translate(-2px,-2px)
+  &.active
+    .navItem
+      opacity: 1
 
+.navLogo
+  position: fixed
+  top: 8%
+  width: 230px
+  opacity: 0
+  +trans
+  &.active
+    opacity: 1
 
 
 

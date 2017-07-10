@@ -1,7 +1,7 @@
 <template lang="jade">
 .page.pageContact
   .back_img
-    .left_img
+    .left_img(:style="{transform: `translateY(${(scrollTop-blockY)/3}px)`}")
       .tile
   .agent
     p.agent_info ROGE<br>［Booking Agent］<br>LINE ID CaoDong_Official<br>WeChat ID CaoDong_Official<br>nopartyforcaodong@gmail.com
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 import {mapState} from 'vuex'
 import Bandcamp from "@/assets/img/06_CONTACT/連結/Bandcamp.png"
 import Bandsintown from "@/assets/img/06_CONTACT/連結/Bandsintown.png"
@@ -101,7 +102,8 @@ export default {
   name: 'pageContact',
   data () {
     return {
-      platforms
+      platforms,
+      blockY: -1
     }
   },
   methods: {
@@ -114,6 +116,9 @@ export default {
   },
   computed:{
     ...mapState(['scrollTop'])
+  },
+  mounted(){
+    this.blockY=$(".pageContact").offset().top
   }
 }
 </script>

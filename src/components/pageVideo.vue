@@ -6,7 +6,7 @@
     .content
       .video_nav
         img.tag(src="../assets/img/03_WORKS/歌名/山海.png")
-      iframe(width="100%" height="600" src="https://www.youtube.com/embed/j2311FZWoFQ?rel=0" frameborder="0" allowfullscreen)
+      iframe(width="100%" height="700" src="https://www.youtube.com/embed/j2311FZWoFQ?rel=0" frameborder="0" allowfullscreen)
       
 </template>
 

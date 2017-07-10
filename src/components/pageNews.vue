@@ -10,6 +10,10 @@
                     :style="{'transform':`translateY(${-scrollTop/5+320}px)`}")
         img.right_2(src="../assets/img/02_INTRO-02/UP_pic/DSC_1777.jpg",
                     :style="{'transform':`translateY(${-scrollTop/7+270}px)`}")
+        .texts
+          .text(v-for="about in abouttexts")
+            img(:src="about.img",
+                :style="{'transform':`translateY(${(scrollTop-blockY)/(20-about.zIndex)}px)`}")
       .bottom
         ul.news_block
           li(v-for="a_news in news")
@@ -19,26 +23,32 @@
 </template>
 
 <script>
+
+import $ from 'jquery'
+import {mapState} from 'vuex'
 var context = require.context('@/assets/img/02_INTRO-02/簡介02', true, /\.(png)$/);
 var files={};
 
 context.keys().forEach((filename)=>{
-  console.log(filename);
   files[filename] = context(filename);
 });
+var zIndex = [1,2,10,2,4,7,9,4,10,3]
+var files = Object.values(files) .map((o,id)=>({zIndex: zIndex[id] ,img: o}))
 console.log(files);
 
-
-
-import {mapState} from 'vuex'
 export default {
   name: 'pageNews',
   data () {
     return {
+      abouttexts: files,
+      blockY: -1
     }
   },
   computed:{
     ...mapState(['scrollTop','news'])
+  },
+  mounted(){
+    this.blockY=$(".pageNews").offset().top
   }
 }
 </script>
@@ -101,7 +111,58 @@ export default {
   .content
     display: block
 
+.texts
+  position: absolute
+  right: 0
+  width: 100%
+  text-align: left
+  padding-left: 20%
+  box-sizing: border-box
+  padding-top: 5%
+  .text
+    vertical-align: top
+    &:nth-child(1)
+      opacity: 0.3
+    &:nth-child(2)
+      opacity: 0.4
+      margin-left: 40%
+    &:nth-child(3)
+      margin-left: 25%
+      opacity: 0.8
+      margin-right: 20px
+      display: inline-block
+    &:nth-child(4)
+      opacity: 0.3
+      display: inline-block
+    &:nth-child(5)
+      margin-left: 35%
+      opacity: 0.8
+      margin-right: 20px
+      display: inline-block
+    &:nth-child(6)
+      opacity: 0.3
+      display: inline-block
+    &:nth-child(7)
+      margin-top: 140px
+      opacity: 0.8
+      display: inline-block
+    &:nth-child(8)
+      margin-left: 10%
+      opacity: 0.3
+      display: block
+    &:nth-child(9)
+      opacity: 1
+      display: inline-block
+      margin-right: 20px
+    &:nth-child(10)
+      opacity: 0.6
+      display: inline-block
+    img
+      height: 36px
 
+    &:last-child
+      img
+        height: 80px
 
 .right_1
   width: 50%
